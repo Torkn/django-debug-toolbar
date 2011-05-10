@@ -21,7 +21,7 @@ def tidy_stacktrace(stack):
     1. Are part of Django (except contrib apps)
     2. Are part of SocketServer (used by Django's dev server)
     3. Are the last entry (which is part of our stacktracing code)
-    
+
     ``stack`` should be a list of frame tuples from ``inspect.stack()``
     """
     trace = []
