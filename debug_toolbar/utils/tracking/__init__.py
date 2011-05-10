@@ -81,7 +81,7 @@ def register_hook(func, hook, callback):
     wrapped.__wrapped__ = actual
     wrapped.__doc__ = getattr(actual, '__doc__', None)
     wrapped.__name__ = actual.__name__
-    
+
     id_ = id(actual)
     if id_ not in callbacks[hook]:
         callbacks[hook][id_] = []

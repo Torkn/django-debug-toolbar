@@ -38,7 +38,7 @@ class DebugToolbar(object):
             'debug_toolbar.panels.logger.LoggingPanel',
         )
         self.load_panels()
-    
+
     def _get_panels(self):
         return self._panels.values()
     panels = property(_get_panels)
@@ -84,7 +84,7 @@ class DebugToolbar(object):
         Renders the overall Toolbar with panels inside.
         """
         media_path = os.path.join(os.path.dirname(__file__), os.pardir, 'media', 'debug_toolbar')
-        
+
         context = self.template_context.copy()
         context.update({
             'panels': self.panels,

@@ -18,7 +18,7 @@ if not settings.configured:
             'django.contrib.sites',
 
             'debug_toolbar',
-            
+
             'debug_toolbar.tests',
         ],
         ROOT_URLCONF='',

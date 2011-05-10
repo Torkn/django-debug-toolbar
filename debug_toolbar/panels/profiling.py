@@ -11,7 +11,7 @@ from colorsys import hsv_to_rgb
 
 class DjangoDebugToolbarStats(Stats):
     __root = None
-    
+
     def get_root_func(self):
         if self.__root is None:
             for func, (cc, nc, tt, ct, callers) in self.stats.iteritems():
@@ -19,7 +19,7 @@ class DjangoDebugToolbarStats(Stats):
                     self.__root = func
                     break
         return self.__root
-    
+
     def print_call_tree_node(self, function, depth, max_depth, cum_filter=0.1):
         self.print_line(function, depth=depth)
         if depth < max_depth:
@@ -39,14 +39,14 @@ class FunctionCall(object):
         self.id = id
         self.parent_ids = parent_ids
         self.hsv = hsv
-    
+
     def parent_classes(self):
         return self.parent_classes
-    
+
     def background(self):
         r,g,b = hsv_to_rgb(*self.hsv)
         return 'rgb(%f%%,%f%%,%f%%)' %(r*100, g*100, b*100)
-    
+
     def func_std_string(self): # match what old profile produced
         func_name = self.func
         if func_name[:2] == ('~', 0):
@@ -61,16 +61,16 @@ class FunctionCall(object):
             idx = file_name.find('/site-packages/')
             if idx > -1:
                 file_name=file_name[idx+14:]
-            
+
             file_path, file_name = file_name.rsplit('/', 1)
-            
+
             return mark_safe('<span class="path">{0}/</span><span class="file">{1}</span> in <span class="func">{3}</span>(<span class="lineno">{2}</span>)'.format(
                 file_path,
                 file_name,
                 line_num,
                 method,
             ))
-    
+
     def subfuncs(self):
         i=0
         h,s,v = self.hsv
@@ -83,23 +83,23 @@ class FunctionCall(object):
             else:
                 s1 = s*(stats[3]/self.stats[3])
             yield FunctionCall(self.statobj,
-                               func, 
-                               self.depth+1, 
+                               func,
+                               self.depth+1,
                                stats=stats,
                                id=str(self.id) + '_' + str(i),
                                parent_ids=self.parent_ids + [self.id],
                                hsv=(h1,s1,1))
-    
+
     def count(self):
         return self.stats[1]
-    
+
     def tottime(self):
         return self.stats[2]
-    
+
     def cumtime(self):
         cc, nc, tt, ct = self.stats
         return self.stats[3]
-    
+
     def tottime_per_call(self):
         cc, nc, tt, ct = self.stats
 
@@ -107,7 +107,7 @@ class FunctionCall(object):
             return 0
 
         return tt/nc
-    
+
     def cumtime_per_call(self):
         cc, nc, tt, ct = self.stats
 
@@ -131,7 +131,7 @@ class ProfilingDebugPanel(DebugPanel):
 
     def url(self):
         return ''
-    
+
     def title(self):
         return _('Profiling')
 
@@ -153,12 +153,12 @@ class ProfilingDebugPanel(DebugPanel):
                 if subfunc.stats[3] >= cum_time:
                     func.has_subfuncs = True
                     self.add_node(func_list, subfunc, max_depth, cum_time=cum_time)
-    
+
     def content(self):
-        
+
         self.stats.calc_callees()
         root = FunctionCall(self.stats, self.stats.get_root_func(), depth=0)
-        
+
         func_list = []
         self.add_node(func_list, root, 10, root.stats[3]/8)
         context = self.context.copy()

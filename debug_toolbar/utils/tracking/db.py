@@ -20,7 +20,7 @@ class CursorWrapper(object):
     """
     Wraps a cursor and logs queries.
     """
-    
+
     def __init__(self, cursor, db, logger):
         self.cursor = cursor
         # Instance of a BaseDatabaseWrapper subclass
@@ -87,8 +87,8 @@ class CursorWrapper(object):
                     'iso_level': conn.isolation_level,
                     'encoding': conn.encoding,
                 })
-                
-            
+
+
             # We keep `sql` to maintain backwards compatibility
             self.logger.record(**params)
 

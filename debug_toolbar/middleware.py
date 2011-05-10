@@ -32,7 +32,7 @@ class DebugToolbarMiddleware(object):
     on outgoing response.
     """
     debug_toolbars = {}
-    
+
     @classmethod
     def get_current(cls):
         return cls.debug_toolbars.get(thread.get_ident())
@@ -116,7 +116,7 @@ class DebugToolbarMiddleware(object):
             for panel in toolbar.panels:
                 panel.process_response(request, response)
             response.content = replace_insensitive(
-                smart_unicode(response.content), 
+                smart_unicode(response.content),
                 self.tag,
                 smart_unicode(toolbar.render_toolbar() + self.tag))
             if response.get('Content-Length', None):
