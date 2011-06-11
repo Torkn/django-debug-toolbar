@@ -36,6 +36,10 @@ def tidy_stacktrace(stack):
             continue
         if socketserver_path in s_path:
             continue
+        if not text:
+            text = ''
+        else:
+            text = (''.join(text)).strip()
         trace.append((path, line_no, func_name, text))
     return trace
 

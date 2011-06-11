@@ -25,6 +25,8 @@ There is also one Django management command currently:
 
 If you have ideas for other panels please let us know.
 
+* Note: The Debug Toolbar only works on Django 1.1 and newer.
+
 Installation
 ============
 
@@ -189,6 +191,13 @@ adding proper coverage (especially if it has a chance for a regression) in the t
 ::
 
     python setup.py test
+
+
+3rd Party Panels
+================
+
+A list of 3rd party panels can be found on the Django Debug Toolbar Github wiki:
+https://github.com/django-debug-toolbar/django-debug-toolbar/wiki/3rd-Party-Panels
 
 TODOs and BUGS
 ==============

@@ -36,7 +36,7 @@ class CursorWrapper(object):
         finally:
             stop = datetime.now()
             duration = ms_from_timedelta(stop - start)
-            stacktrace = tidy_stacktrace(inspect.stack())
+            stacktrace = tidy_stacktrace(reversed(inspect.stack()))
             _params = ''
             try:
                 _params = simplejson.dumps([force_unicode(x, strings_only=True) for x in params])
@@ -57,7 +57,7 @@ class CursorWrapper(object):
                 pass
             del cur_frame
 
-            alias = getattr(self, 'alias', 'default')
+            alias = getattr(self.db, 'alias', 'default')
             conn = connections[alias].connection
             # HACK: avoid imports
             if conn:
